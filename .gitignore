@@ -16,3 +16,4 @@ venv/
 
 # Models
 models/*.pkl
+!models/wine_quality_model.pkl
