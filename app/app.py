@@ -1,14 +1,18 @@
 from flask import Flask, render_template, request
 import joblib
 import numpy as np
-import threading
-import webbrowser
+
 
 # Create Flask application
 app = Flask(__name__)
 
 # Load trained model
-model = joblib.load("../models/wine_quality_model.pkl")
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "..", "models", "wine_quality_model.pkl")
+
+model = joblib.load(MODEL_PATH)
 #Create the Home Route
 @app.route("/")
 def home():
@@ -36,8 +40,6 @@ def predict():
     "index.html",
     prediction_text=f"Predicted Wine Quality: {prediction[0]}"
 )
-def open_browser():
-    webbrowser.open_new("http://127.0.0.1:5000")
+
 if __name__ == "__main__":
-    threading.Timer(1, open_browser).start()
     app.run(debug=True)
